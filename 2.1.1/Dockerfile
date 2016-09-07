@@ -3,8 +3,8 @@ MAINTAINER k01 <k01@white-wing.jp>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV PHANTOM_JS_VERSION 2.1.1
-ENV IPAFONT_URL http://ipafont.ipa.go.jp/old/ipaexfont/IPAexfont00201.php
-ENV IPAFONT_ARCHIVE_FOLDER_NAME IPAexfont00201
+ENV IPAFONT_URL http://dl.ipafont.ipa.go.jp/IPAexfont/IPAexfont00301.zip
+ENV IPAFONT_ARCHIVE_FOLDER_NAME IPAexfont00301
 
 RUN echo 'deb http://archive.ubuntu.com/ubuntu/ trusty multiverse\n\
 deb-src http://archive.ubuntu.com/ubuntu/ trusty multiverse\n\
