@@ -11,7 +11,7 @@
 set -e
 
 VERSION="2.1.1"
-IMAGE="white-wing/phantomjs:$VERSION"
+IMAGE="cosmicvelocity/phantomjs:$VERSION"
 
 if [ "$(pwd)" != '/' ]; then
     VOLUMES="-v $(pwd):$(pwd)"
