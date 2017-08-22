@@ -1,5 +1,5 @@
 # phantomjs
-Unofficial [phantomjs](http://phantomjs.org/) docker image.
+Unofficial [PhantomJS](http://phantomjs.org/) docker image.
 
 ## Install
 
@@ -16,6 +16,4 @@ Unofficial [phantomjs](http://phantomjs.org/) docker image.
 ## License
 View license information for the software contained in this image.
 
-- [IPAexフォント](http://ipafont.ipa.go.jp/ipa_font_license_v1-html)
-- [noto-cjk](https://github.com/googlei18n/noto-cjk/blob/master/LICENSE)
-- [TrueType core fonts for the Web EUL](http://www.microsoft.com/typography/fontpack/eula.htm) - http://www.microsoft.com/typography/fontpack/eula.htm
+- [PhantomJS](https://github.com/ariya/phantomjs/blob/master/LICENSE.BSD)
