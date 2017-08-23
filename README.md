@@ -13,6 +13,10 @@ Unofficial [PhantomJS](http://phantomjs.org/) docker image.
 
     $ docker-phantomjs rasterize.js http://www.yahoo.co.jp/ test.jpg
 
+or
+    
+    $ docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) cosmicvelocity/phantomjs:2.1.1 rasterize.js http://www.yahoo.co.jp/ sample.png
+
 ## License
 View license information for the software contained in this image.
 
