@@ -1,95 +1,39 @@
-FROM ubuntu:16.04
-MAINTAINER k01 <k-machida@aideo.co.jp>
+FROM debian:stretch-slim
+MAINTAINER Kouichi Machida <k-machida@aideo.co.jp>
 
 ENV DEBIAN_FRONTEND=noninteractive \
     LANGUAGE=en_US \
     LC_ALL=C \
     LANG=en_US.UTF-8
-
 ENV PHANTOM_JS_VERSION 2.1.1
+ENV PHANTOM_JS_URL=https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${PHANTOM_JS_VERSION}-linux-x86_64.tar.bz2 \
+    PHANTOM_JS_DOWNLOAD_SHA256=86dd9a4bf4aee45f1a84c9f61cf1947c1d6dce9b9e8d2a907105da7852460d2f
 
-RUN sed -i -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.jaist.ac.jp/pub/Linux/ubuntu/%g" /etc/apt/sources.list \
-    && sed -i -e "s%http://security.ubuntu.com/ubuntu/%http://ftp.jaist.ac.jp/pub/Linux/ubuntu/%g" /etc/apt/sources.list \
-    \
-    && apt-get update \
-    && apt-get upgrade -y \
-    \
-    && apt-get install -y \
-        bison \
-        build-essential \
-        flex \
+RUN apt-get update \
+    && apt-get upgrade \
+    && apt-get install -y --no-install-recommends \
+        bzip2 \
+        ca-certificates \
+        curl \
         fontconfig \
         fonts-takao-gothic \
         fonts-takao-mincho \
-        git \
-        gperf \
-        libfontconfig1-dev \
-        libfreetype6 \
-        libicu-dev \
-        libjpeg-dev \
-        libpng-dev \
-        libsqlite3-dev \
-        libssl-dev \
-        libx11-dev \
-        libxext-dev \
-        perl \
-        python \
-        ruby \
-        unzip \
-        wget \
     \
-    && fc-cache -fv \
+    && curl -L -o /tmp/phantomjs.tar.bz2 "${PHANTOM_JS_URL}" \
+    && echo "${PHANTOM_JS_DOWNLOAD_SHA256} */tmp/phantomjs.tar.bz2" | sha256sum -c - \
+    && mkdir -p /tmp/phantomjs \
+    && tar -xf /tmp/phantomjs.tar.bz2 -C /tmp/phantomjs --strip-components=1 \
+    && mv /tmp/phantomjs/bin/phantomjs /usr/local/bin \
+    && mv /tmp/phantomjs/README.md / \
+    && mv /tmp/phantomjs/LICENSE.BSD / \
+    && mv /tmp/phantomjs/third-party.txt / \
     \
-    && git clone git://github.com/ariya/phantomjs.git /tmp/phantomjs \
-    && cd /tmp/phantomjs \
-    && git checkout ${PHANTOM_JS_VERSION} \
-    && git submodule init \
-    && git submodule update \
-    && python build.py --release --confirm \
-    && mv bin/phantomjs /usr/local/bin \
-    \
-    && cd /tmp \
     && apt-get purge -y \
-        bison \
-        build-essential \
-        flex \
-        gperf \
-        perl \
-        python \
-        ruby \
-        unzip \
-        wget \
-    && apt-get purge -y \
-        cpp \
-        fakeroot \
-        gcc \
-        insserv \
-        iproute2 \
-        javascript-common \
-        libgdbm3 \
-        libldap-2.4-2 \
-        libperl5.22 \
-        libpython2.7-minimal \
-        libssl-doc \
-        libx11-data \
-        libx11-doc \
-        libxau6 \
-        makedev \
-        manpages \
-        manpages-dev \
-        netbase \
-        openssh-client \
-        python2.7-minimal \
-        rsync \
-        shared-mime-info \
-        xdg-user-dirs \
+        bzip2 \
+        curl \
     && apt-get autoremove -y \
     && apt-get autoclean -y \
     && apt-get clean -y \
     \
-    && rm -rf /tmp/phantomjs \
-    && rm -rf /var/cache/debconf/* \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /var/log/*
-
-ENTRYPOINT ["/usr/local/bin/phantomjs"]
+    && rm -rf /tmp/* \
+    && rm -rf /var/lib/apt/lists/*
