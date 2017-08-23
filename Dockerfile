@@ -37,3 +37,5 @@ RUN apt-get update \
     \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["/usr/local/bin/phantomjs"]
