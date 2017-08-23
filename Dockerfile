@@ -1,7 +1,10 @@
 FROM ubuntu:16.04
 MAINTAINER k01 <k-machida@aideo.co.jp>
 
-ENV LANG en_US.UTF-8
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANGUAGE=en_US \
+    LC_ALL=C \
+    LANG=en_US.UTF-8
 
 ENV PHANTOM_JS_VERSION 2.1.1
 
@@ -63,9 +66,14 @@ RUN sed -i -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.jaist.ac.jp/pub/Li
         insserv \
         iproute2 \
         javascript-common \
+        libgdbm3 \
+        libldap-2.4-2 \
         libperl5.22 \
         libpython2.7-minimal \
+        libssl-doc \
+        libx11-data \
         libx11-doc \
+        libxau6 \
         makedev \
         manpages \
         manpages-dev \
@@ -74,6 +82,7 @@ RUN sed -i -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.jaist.ac.jp/pub/Li
         python2.7-minimal \
         rsync \
         shared-mime-info \
+        xdg-user-dirs \
     && apt-get autoremove -y \
     && apt-get autoclean -y \
     && apt-get clean -y \
@@ -81,7 +90,6 @@ RUN sed -i -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.jaist.ac.jp/pub/Li
     && rm -rf /tmp/phantomjs \
     && rm -rf /var/cache/debconf/* \
     && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /var/lib/dpkg/info/* \
     && rm -rf /var/log/*
 
 ENTRYPOINT ["/usr/local/bin/phantomjs"]
